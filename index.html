@@ -41,34 +41,6 @@
             color: #fff; 
             box-sizing: border-box; 
         }
-        .form-row { 
-            display: flex; 
-            justify-content: space-between; 
-            gap: 10px; 
-        }
-        .form-column { 
-            flex: 1; 
-        }
-        .gds-highlight {
-            background-color: rgba(255, 255, 0, 0.7); 
-            padding: 10px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.2em; 
-            margin-top: 20px; 
-        }
-        .example-gds {
-            font-size: 0.9em;
-            color: #cccccc;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .note { 
-            color: #ff0000; 
-            text-align: center; 
-            font-size: 1em; 
-            margin: 10px 0;
-        }
         button { 
             background: #00aaff; 
             color: #fff; 
@@ -89,22 +61,13 @@
             font-size: 1em; 
             text-align: center; 
         }
-        .letter-count {
-            margin-top: 10px;
-            font-size: 1em; 
-            color: #00ff00; 
-        }
-        .important-note {
-            margin-top: 20px;
-            font-size: 1em; 
-            color: #ffdd00; 
+        .gds-highlight {
+            background-color: rgba(255, 255, 0, 0.7); 
+            padding: 10px;
+            font-weight: bold;
             text-align: center;
-        }
-        #loadingMessage {
-            display: none; 
-            text-align: center; 
-            margin-top: 10px; 
-            color: #ffff00; 
+            font-size: 1.2em; 
+            margin-top: 20px; 
         }
     </style>
 </head>
@@ -112,123 +75,40 @@
     <div class="container">
         <h1>Airline Name Format Guide</h1>
         <form id="bookingForm">
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="airlineSelect">Select Airline:</label>
-                    <select id="airlineSelect" required>
-                        <option value="">Select an airline</option>
-                        <option value="Oman Air">Oman Air</option>
-                        <option value="IndiGo">IndiGo</option>
-                        <option value="Air India">Air India</option>
-                        <option value="Kuwait Airways">Kuwait Airways</option>
-                        <option value="Emirates">Emirates</option>
-                    </select>
-                </div>
-                <div class="form-column">
-                    <label for="titleSelect">Title:</label>
-                    <select id="titleSelect" required>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Master">Master</option>
-                        <option value="Ms">Ms</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" placeholder="e.g. John" required>
-                </div>
-                <div class="form-column">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" placeholder="e.g. Doe">
-                </div>
-            </div>
-            <div class="letter-count" id="letterCount">
-                Total Letters: Title - 0, First Name - 0, Last Name - 0, Combined - 0
-            </div>
-            <p class="gds-highlight">For GDS: <span id="gdsFormat"></span></p>
-            <p class="example-gds"><strong>Example:</strong> <span id="gdsExample">Select an airline</span></p>
-            <div class="note">If more than one part, split the name.</div>
+            <label for="airlineSelect">Select Airline:</label>
+            <select id="airlineSelect" required>
+                <option value="">Select an airline</option>
+                <option value="Oman Air">Oman Air</option>
+                <option value="IndiGo">IndiGo</option>
+                <option value="Air India">Air India</option>
+                <option value="Kuwait Airways">Kuwait Airways</option>
+                <option value="Emirates">Emirates</option>
+            </select>
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" placeholder="e.g. John" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" placeholder="e.g. Doe">
+
             <button type="submit">Generate</button>
-            <div id="loadingMessage">Generating GDS Format...</div>
+            <p class="gds-highlight">For GDS: <span id="gdsFormat"></span></p>
         </form>
-        <div class="instructions" id="gdsInstructions">
-            <p>Instructions for GDS Name Entry will appear here.</p>
-        </div>
-        <div class="important-note">
-            <p><strong>Important:</strong> If the traveller's passport does not include a last name, the first name will be treated as the last name for the booking.</p>
-        </div>
+
+        <p><a href="admin.html" style="color: #fff;">Go to Admin Page</a></p>
     </div>
 
     <script>
-        document.getElementById("airlineSelect").addEventListener("change", updateExampleGDSFormat);
-        document.getElementById("firstName").addEventListener("input", updateLetterCount);
-        document.getElementById("lastName").addEventListener("input", updateLetterCount);
-        document.getElementById("titleSelect").addEventListener("change", updateLetterCount);
-
         document.getElementById("bookingForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
             const firstName = document.getElementById("firstName").value;
-            let lastName = document.getElementById("lastName").value || firstName; // Set lastName to firstName if empty
-            const title = document.getElementById("titleSelect").value;
-
-            // Display loading message
-            document.getElementById("loadingMessage").style.display = "block";
-
-            // Simulate loading time
-            setTimeout(() => {
-                const gdsFormat = `${lastName} / ${firstName || "N/A"} / ${title}`;
-                document.getElementById("gdsFormat").innerText = gdsFormat;
-
-                // Hide loading message after generation
-                document.getElementById("loadingMessage").style.display = "none";
-            }, 1000); // Simulate 1-second delay
-        });
-
-        function updateLetterCount() {
-            const firstNameLength = document.getElementById("firstName").value.length;
-            const lastNameLength = document.getElementById("lastName").value.length;
-            const titleLength = document.getElementById("titleSelect").value.length;
-            const totalLength = firstNameLength + lastNameLength + titleLength;
-            document.getElementById("letterCount").innerText = `Total Letters: Title - ${titleLength}, First Name - ${firstNameLength}, Last Name - ${lastNameLength}, Combined - ${totalLength}`;
-        }
-
-        function updateExampleGDSFormat() {
+            let lastName = document.getElementById("lastName").value || firstName; // Use first name if last name is empty
             const airline = document.getElementById("airlineSelect").value;
-            let exampleText = "";
-            let instructionsText = "";
 
-            switch (airline) {
-                case "Oman Air":
-                    exampleText = "Doe / John / Mr";
-                    instructionsText = "<strong>Oman Air:</strong> Use Last Name / First Name format. If there's no Last Name, leave blank.";
-                    break;
-                case "IndiGo":
-                    exampleText = "Doe / John / Mr";
-                    instructionsText = "<strong>IndiGo:</strong> Use Last Name / First Name format. If there's no Last Name, leave blank.";
-                    break;
-                case "Air India":
-                    exampleText = "Doe / John / Mr";
-                    instructionsText = "<strong>Air India:</strong> Use Last Name / First Name format. If there's no Last Name, leave blank.";
-                    break;
-                case "Kuwait Airways":
-                    exampleText = "Doe / John / Mr";
-                    instructionsText = "<strong>Kuwait Airways:</strong> Use Last Name / First Name format. If there's no Last Name, leave blank.";
-                    break;
-                case "Emirates":
-                    exampleText = "Doe / John / Mr";
-                    instructionsText = "<strong>Emirates:</strong> Use Last Name / First Name format. If there's no Last Name, leave blank.";
-                    break;
-                default:
-                    exampleText = "Select an airline";
-                    instructionsText = "Instructions for GDS Name Entry will appear here.";
-            }
-
-            document.getElementById("gdsExample").innerText = exampleText;
-            document.getElementById("gdsInstructions").innerHTML = instructionsText;
-        }
+            const gdsFormat = `${lastName} / ${firstName} / ${airline}`;
+            document.getElementById("gdsFormat").innerText = gdsFormat;
+        });
     </script>
 </body>
 </html>
