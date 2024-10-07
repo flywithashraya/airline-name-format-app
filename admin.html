@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Airline Data Entry</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background: linear-gradient(135deg, #00aaff, #0047ab); 
+            padding: 20px; 
+            color: #fff; 
+            font-size: 1em; 
+        }
+        .container { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
+            padding: 20px; 
+            border-radius: 15px; 
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        h1 { 
+            text-align: center; 
+        }
+        label { 
+            display: block; 
+            margin: 10px 0 5px; 
+        }
+        input, button { 
+            width: 100%; 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            border-radius: 5px; 
+            border: 2px solid #fff; 
+            background: rgba(0, 0, 0, 0.5); 
+            color: #fff; 
+            box-sizing: border-box; 
+        }
+        button { 
+            background: #00aaff; 
+            cursor: pointer; 
+            transition: background 0.3s; 
+        }
+        button:hover { 
+            background: #0047ab; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin - Airline Data Entry</h1>
+        <form id="dataEntryForm">
+            <label for="airlineName">Airline Name:</label>
+            <input type="text" id="airlineName" placeholder="e.g. Qatar Airways" required>
+
+            <label for="instructions">Instructions:</label>
+            <input type="text" id="instructions" placeholder="Instructions for GDS Name Entry" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("dataEntryForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const airlineName = document.getElementById("airlineName").value;
+            const instructions = document.getElementById("instructions").value;
+
+            // Here you can send the data to your server or save it locally
+            console.log(`Airline Name: ${airlineName}, Instructions: ${instructions}`);
+
+            // Optionally reset the form
+            document.getElementById("dataEntryForm").reset();
+            alert("Data submitted successfully!");
+        });
+    </script>
+</body>
+</html>
